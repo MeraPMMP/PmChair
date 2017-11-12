@@ -17,7 +17,7 @@ use pocketmine\block\Stair;
 use pocketmine\math\Vector3;
 use pocketmine\utils\Config;
 
-class PmChair extends PluginBase implements Listener {
+class PmChair extends PluginBase implements Listener{
 
 	private $chairs = [];
 	private $doubleTap = [];
