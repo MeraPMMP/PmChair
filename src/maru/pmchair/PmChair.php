@@ -21,7 +21,7 @@ class PmChair extends PluginBase implements Listener{
 
 	private $chairs = [];
 	private $doubleTap = [];
-	
+
 	public function onEnable(){
 		$this->getServer ()->getPluginManager ()->registerEvents($this, $this);
 	}
@@ -111,9 +111,9 @@ class PmChair extends PluginBase implements Listener{
 	public function onEntityLevelChange(EntityLevelChangeEvent $event){
 		if($event->getEntity() instanceof Player){
 			foreach($this->chairs as $chair){
-				if($chair->level === $event->getFrom()){
+				if($chair->level === $event->getOrigin()){
 					$chair->despawnFrom($event->getEntity());
-				}else if($chair->level === $event->getTo()){
+				}else if($chair->level === $event->getTarget()){
 					$chair->spawnTo($event->getEntity());
 				}
 			}
