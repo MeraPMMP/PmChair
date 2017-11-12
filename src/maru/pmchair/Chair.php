@@ -54,7 +54,7 @@ class Chair extends Position{
 		$pk->link->fromEntityUniqueId = $this->id;
 		$pk->link->toEntityUniqueId = $this->entity->getId();
 		$pk->link->type = 0b01;
-		$pk->link->byte2 = 0b01;
+		$pk->link->bool1 = true;
 		$player->dataPacket($pk);
 
 		$player->sendTip(" \n ");
