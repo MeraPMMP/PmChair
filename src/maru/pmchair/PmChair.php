@@ -70,22 +70,24 @@ class PmChair extends PluginBase implements Listener{
 	}
 
 	public function onTouch(PlayerInteractEvent $event){
-		$player = $event->getPlayer();
-		if(!$player->isSneaking() && $event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK){
-			$block = $event->getBlock();
-			if($this->isSeatOnChair($player)){
-				$this->removeChair($player);
-			}else if($block instanceof Stair && ($block->getDamage() & 0b100) == 0){
-				if($this->getChairFromPosition($block) !== null){
-					$player->sendPopup("§c누군가가 이미 계단에 앉아있습니다");
-					return;
-				}
-				if(microtime(true) - ($this->doubleTap[$player->getId()] ?? -1) < 0.5){
-					$this->seatOnChair($player, $block);
-					unset($this->doubleTap[$player->getId()]);
-				}else{
-					$this->doubleTap[$player->getId()] = microtime(true);
-					$player->sendPopup("§c계단에 앉으려면 한번 더 터치하세요");
+		if($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK){
+			$player = $event->getPlayer();
+			if(!$player->isSneaking()){
+				$block = $event->getBlock();
+				if($this->isSeatOnChair($player)){
+					$this->removeChair($player);
+				}else if($block instanceof Stair && ($block->getDamage() & 0b100) == 0){
+					if($this->getChairFromPosition($block) !== null){
+						$player->sendPopup("§c누군가가 이미 계단에 앉아있습니다");
+						return;
+					}
+					if(microtime(true) - ($this->doubleTap[$player->getId()] ?? -1) < 0.5){
+						$this->seatOnChair($player, $block);
+						unset($this->doubleTap[$player->getId()]);
+					}else{
+						$this->doubleTap[$player->getId()] = microtime(true);
+						$player->sendPopup("§c계단에 앉으려면 한번 더 터치하세요");
+					}
 				}
 			}
 		}
